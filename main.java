@@ -53,9 +53,7 @@ public class main {
 			catch(SQLException e)
 			{
 				e.printStackTrace();
-			})
-				aze
-				zaswdxdsw
+			}
 			
 		}
 	}
