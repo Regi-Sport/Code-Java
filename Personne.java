@@ -33,6 +33,19 @@ public class Personne
 		this.Age = 0;
 		this.Date_Naissance = "";
 	}
+	
+	
+	// Méthode permettant d'afficher les informations d'une personne //
+	
+	public void Afficher()
+	{
+		System.out.print(Id_Personne+"  ");
+		System.out.print(Id_Equipe+"  ");
+		System.out.print(Nom_P+"  ");
+		System.out.print(Prenom+"  ");
+		System.out.print(Age+"  ");
+		System.out.println(Date_Naissance);
+	}
 
 
 	//Génération des Get et Set
@@ -40,56 +53,45 @@ public class Personne
 		return Id_Personne;
 	}
 
-
 	public void setId_Personne(int id_Personne) {
 		Id_Personne = id_Personne;
 	}
-
 
 	public int getId_Equipe() {
 		return Id_Equipe;
 	}
 
-
 	public void setId_Equipe(int id_Equipe) {
 		Id_Equipe = id_Equipe;
 	}
-
 
 	public String getNom_P() {
 		return Nom_P;
 	}
 
-
 	public void setNom_P(String nom_P) {
 		Nom_P = nom_P;
 	}
-
 
 	public String getPrenom() {
 		return Prenom;
 	}
 
-
 	public void setPrenom(String prenom) {
 		Prenom = prenom;
 	}
-
 
 	public int getAge() {
 		return Age;
 	}
 
-
 	public void setAge(int age) {
 		Age = age;
 	}
 
-
 	public String getDate_Naissance() {
 		return Date_Naissance;
 	}
-
 
 	public void setDate_Naissance(String date_Naissance) {
 		Date_Naissance = date_Naissance;
