@@ -23,6 +23,16 @@ public class Pratiquer
 		this.Id_Sport = 0;
 		this.Id_Personne = 0;
 	}
+	
+	
+	// Méthode permettant d'afficher les informations de pratiquer //
+	
+	public void Afficher()
+	{
+		System.out.print(Id_Equipe+"  ");
+		System.out.print(Id_Sport+"  ");
+		System.out.println(Id_Personne);
+	}
 
 
 	//Génération des Get et Set
@@ -30,26 +40,21 @@ public class Pratiquer
 		return Id_Equipe;
 	}
 
-
 	public void setId_Equipe(int id_Equipe) {
 		Id_Equipe = id_Equipe;
 	}
-
 
 	public int getId_Sport() {
 		return Id_Sport;
 	}
 
-
 	public void setId_Sport(int id_Sport) {
 		Id_Sport = id_Sport;
 	}
 
-
 	public int getId_Personne() {
 		return Id_Personne;
 	}
-
 
 	public void setId_Personne(int id_Personne) {
 		Id_Personne = id_Personne;
