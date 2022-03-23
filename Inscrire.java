@@ -1,40 +1,31 @@
 package RegiSport;
 
-public class Pratiquer
+public class Inscrire
 {
 	private int Id_Equipe;
-	private int Id_Sport;
+	private int Id_Competition;
 	private int Id_Personne;
 	
 	
-	//Constructeur Pratiquer
-	public Pratiquer(int id_Equipe, int id_Sport, int id_Personne)
+	//Constructeur Inscrire
+	public Inscrire(int id_Equipe, int id_Competition, int id_Personne)
 	{
 		this.Id_Equipe = id_Equipe;
-		this.Id_Sport = id_Sport;
+		this.Id_Competition = id_Competition;
 		this.Id_Personne = id_Personne;
 	}
 	
 	
-	//Constructeur vide Pratiquer
-	public Pratiquer()
+	//Constructeur vide Inscrire
+	public Inscrire()
 	{
 		this.Id_Equipe = 0;
-		this.Id_Sport = 0;
+		this.Id_Competition = 0;
 		this.Id_Personne = 0;
 	}
-	
-	
-	// Méthode permettant d'afficher les informations de pratiquer //
-	
-	public void Afficher()
-	{
-		System.out.print(Id_Equipe+"  ");
-		System.out.print(Id_Sport+"  ");
-		System.out.println(Id_Personne);
-	}
 
 
+	
 	//Génération des Get et Set
 	public int getId_Equipe() {
 		return Id_Equipe;
@@ -44,12 +35,12 @@ public class Pratiquer
 		Id_Equipe = id_Equipe;
 	}
 
-	public int getId_Sport() {
-		return Id_Sport;
+	public int getId_Competition() {
+		return Id_Competition;
 	}
 
-	public void setId_Sport(int id_Sport) {
-		Id_Sport = id_Sport;
+	public void setId_Competition(int id_Competition) {
+		Id_Competition = id_Competition;
 	}
 
 	public int getId_Personne() {
