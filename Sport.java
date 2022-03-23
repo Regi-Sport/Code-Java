@@ -10,6 +10,15 @@ public class Sport
 		this.Id_Sport = id_Sport;
 		this.Libelle_S = libelle_S;
 	}
+	
+	
+	// Méthode permettant d'afficher les informations d'un sport //
+	
+	public void Afficher()
+	{
+		System.out.print(Id_Sport+"  ");
+		System.out.println(Libelle_S);
+	}
 
 	
 	//Génération des Get et Set
