@@ -1,25 +1,39 @@
 package RegiSport;
 
-public class Competitions
+public class Competitions extends Sport
 {
-	private int Id_Competition;
-	private int Id_Sport;
-	private String Libelle_C;
-	private String Date_Debut;
-	private String Date_Fin;
-	private String Recompense;
-	private String Vainqueur;
-	private int Nb_Participants;
-	private String Lieu;
+	protected int Id_Competition;
+	protected String Libelle_C;
+	protected String Date_Debut;
+	protected String Date_Fin;
+	protected String Recompense;
+	protected String Vainqueur;
+	protected int Nb_Participants;
+	protected String Lieu;
 	
 	
 	//Constructeur de la competition
-	public Competitions(int id_Competition, int id_Sport, String libelle_C,
+	public Competitions(int Id_Sport, int id_Competition, String libelle_C,
 			String date_Debut, String date_Fin, String recompense, String vainqueur,
 			int nb_Participants, String lieu)
 	{
+		super(Id_Sport);
 		this.Id_Competition = id_Competition;
-		this.Id_Sport = id_Sport;
+		this.Libelle_C = libelle_C;
+		this.Date_Debut = date_Debut;
+		this.Date_Fin = date_Fin;
+		this.Recompense = recompense;
+		this.Vainqueur = vainqueur;
+		this.Nb_Participants = nb_Participants;
+		this.Lieu = lieu;
+	}
+	
+	public Competitions(int id_Competition, String Libelle_S, String libelle_C,
+			String date_Debut, String date_Fin, String recompense, String vainqueur,
+			int nb_Participants, String lieu)
+	{
+		super(Libelle_S);
+		this.Id_Competition = id_Competition;
 		this.Libelle_C = libelle_C;
 		this.Date_Debut = date_Debut;
 		this.Date_Fin = date_Fin;
@@ -48,6 +62,19 @@ public class Competitions
 	// Méthode permettant d'afficher les informations d'une compétition //
 	
 	public void Afficher()
+	{
+		System.out.print(Id_Competition+"  ");
+		System.out.print(Libelle_S+"  ");
+		System.out.print(Libelle_C+"  ");
+		System.out.print(Date_Debut+"  ");
+		System.out.print(Date_Fin+"  ");
+		System.out.print(Recompense+"  ");
+		System.out.print(Vainqueur+"  ");
+		System.out.print(Nb_Participants+"  ");
+		System.out.println(Lieu);
+	}
+	
+	public void Afficher1()
 	{
 		System.out.print(Id_Competition+"  ");
 		System.out.print(Id_Sport+"  ");
