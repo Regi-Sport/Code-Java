@@ -2,13 +2,29 @@ package RegiSport;
 
 public class Sport
 {
-	private int Id_Sport;
-	private String Libelle_S;
+	protected int Id_Sport;
+	protected String Libelle_S;
 	
 	public Sport(int id_Sport, String libelle_S)
 	{
 		this.Id_Sport = id_Sport;
 		this.Libelle_S = libelle_S;
+	}
+	
+	public Sport(String libelle_S)
+	{
+		this.Libelle_S = libelle_S;
+	}
+	
+	public Sport(int id_Sport)
+	{
+		this.Id_Sport = id_Sport;
+	}
+	
+	public Sport()
+	{
+		Id_Sport = 0;
+		Libelle_S = "";
 	}
 	
 	
