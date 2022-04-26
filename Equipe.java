@@ -2,11 +2,11 @@ package RegiSport;
 
 public class Equipe
 {
-	private int Id_equipe;
-	private String Nom_E;
-	private int Effectif;
-	private String Nom_Coach;
-	private String Ville;
+	protected int Id_equipe;
+	protected String Nom_E;
+	protected int Effectif;
+	protected String Nom_Coach;
+	protected String Ville;
 
 	
 	//Constructeur Equipe
@@ -15,7 +15,7 @@ public class Equipe
 	{
 		this.Id_equipe = id_equipe;
 		this.Nom_E = nom_E;
-		this.Id_equipe = effectif;
+		this.Effectif = effectif;
 		this.Nom_Coach = nom_Coach;
 		this.Ville = ville;
 	}
@@ -26,9 +26,19 @@ public class Equipe
 	{
 		this.Id_equipe = 0;
 		this.Nom_E = "";
-		this.Id_equipe = 0;
+		this.Effectif = 0;
 		this.Nom_Coach = "";
 		this.Ville = "";
+	}
+	
+	public Equipe(int id_equipe)
+	{
+		this.Id_equipe = id_equipe;
+	}
+	
+	public Equipe(String nom_E)
+	{
+		this.Nom_E = nom_E;
 	}
 	
 	
