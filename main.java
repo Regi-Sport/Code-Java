@@ -622,12 +622,6 @@ public class main
 			/* rs = st.executeQuery(sql28); */
 			
 			
-			
-			
-			
-			
-			
-			
 		}
 		catch (SQLException e)
 		{
