@@ -501,6 +501,9 @@ public class main
 /*#####################################################################################################################################################################################################################################################*/
 			
 			
+			// PERSONNE :
+			
+			
 			// Personnes Details //
 			
 			System.out.println();
@@ -557,6 +560,66 @@ public class main
 				Personne y = new Personne(ID_P, ID_E, nom_P, prenom, age, date_N);
 				y.Afficher1();
 			}
+			
+			
+/*#####################################################################################################################################################################################################################################################*/
+			
+			
+			// Modifier une Personne //
+			
+			String sql25 = "SELECT * FROM personne WHERE ID_PERSONNE="+id+";";
+			rs = st.executeQuery(sql25);
+			while (rs.next())
+			{
+				int ID_P = rs.getInt("ID_PERSONNE");
+				int ID_E = rs.getInt("ID_EQUIPE");
+				String nom_P = rs.getString("NOM_P");
+				String prenom = rs.getString("PRENOM");
+				int age = rs.getInt("AGE");
+				String date_N = rs.getString("DATE_NAISSANCE");
+				
+				System.out.println(ID_P);
+				System.out.println(ID_E);
+				System.out.println(nom_P);
+				System.out.println(prenom);
+				System.out.println(age);
+				System.out.println(date_N);
+				
+				ID_P = 0 /*textField.getText()*/;
+				ID_E = 0 /*textField.getText()*/;
+				nom_P = ""/*textField.getText()*/;
+				prenom = "" /*textField.getText()*/;
+				age = 0/*textField.getText()*/;
+				date_N = ""/*textField.getText()*/;
+				
+				String sql26 = "UPDATE personne SET ID_PERSONNE="+ID_P+", ID_EQUIPE="+ID_E+", NOM_P="+nom_P+", PRENOM="+prenom+", AGE="+age+", DATE_NAISSANCE="+date_N+";";
+				/*st.executeUpdate(sql26);*/
+			}
+			
+			
+/*#####################################################################################################################################################################################################################################################*/
+			
+			
+			// Delete une Personne //
+			
+			String sql27 = "DELETE FROM personne WHERE ID_PERSONNE="+id+";";
+			/*rs = st.executeQuery(sql27);*/
+			
+			
+/*#####################################################################################################################################################################################################################################################*/
+			
+			
+			// Ajouter une Personne //
+			
+			System.out.println();
+			int ID_P = 0/*textField.getText()*/;
+			int ID_E = 0/*textField.getText()*/;
+			String nom_P = ""/*textField.getText()*/;
+			String prenom = ""/*textField.getText()*/;
+			int age = 0/*textField.getText()*/;
+			String date_N = ""/*textField.getText()*/;
+			String sql28 = "INSERT INTO personne VALUES("+ID_P+", "+ID_E+", "+nom_P+", "+prenom+", "+age+" ,"+date_N+");";
+			/* rs = st.executeQuery(sql28); */
 			
 			
 			
