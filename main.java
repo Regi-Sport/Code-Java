@@ -34,45 +34,15 @@ public class main
 			
 			
 			
-			
-			
 			// Requête :
 			
 			
-			
-			// COMPETITION : 
-			
-			
-			/* Afficher Compétitions à Venir */
-			String sql = "SELECT * FROM competition WHERE DATE_DEBUT > (SELECT date(now()))";
-			
-			/* Afficher Compétitions en Cours */
-			String sql2 = "SELECT * FROM competition WHERE DATE_DEBUT < (SELECT date(now())) AND (SELECT date(now())) < DATE_FIN";
-			
-			/* Afficher Compétitions Terminés */
-			String sql3 = "SELECT * FROM competition WHERE DATE_FIN < (SELECT date(now()))";
-			
-			/* Modifier Compétitions */
-			int id = 1/*textField.getText()*/; // Récuperer
-			String sql4 = "SELECT NOM FROM competition WHERE ID_COMPETITION="+id;
-			String sql5 = "SELECT ID_SPORT FROM competition WHERE ID_COMPETITION="+id;
-			String sql6 = "SELECT DATE_DEBUT FROM competition WHERE ID_COMPETITION="+id;
-			String sql7 = "SELECT DATE_FIN FROM competition WHERE ID_COMPETITION="+id;
-			String sql8 = "SELECT PRIX FROM competition WHERE ID_COMPETITION="+id;
-			String sql9 = "SELECT VAINQUEUR FROM competition WHERE ID_COMPETITION="+id;
-			String sql10 = "SELECT PARTICIPANTS FROM competition WHERE ID_COMPETITION="+id;
-			String sql11 = "SELECT LIEU FROM competitio` WHERE ID_COMPETITION="+id;
-			String sql12 = "SELECT PAYS FROM competition WHERE ID_COMPETITION="+id;
-			
-			
-/*#####################################################################################################################################################################################################################################################*/
-			
+			// COMPETITION : 		
 			
 			// Afficher toutes les compétitions en cours //
+			String sql2 = "SELECT * FROM competition WHERE DATE_DEBUT < (SELECT date(now())) AND (SELECT date(now())) < DATE_FIN";
 			
 			ArrayList<Competitions> Competition_EC = new ArrayList<Competitions>();
-			ArrayList<Competitions> Competition_AV = new ArrayList<Competitions>();
-			ArrayList<Competitions> Competition_F = new ArrayList<Competitions>();
 			
 			rs = st.executeQuery(sql2);
 			while (rs.next())
@@ -117,6 +87,9 @@ public class main
 			
 			
 			// Afficher toutes les compétitions à venir //
+			String sql = "SELECT * FROM competition WHERE DATE_DEBUT > (SELECT date(now()))";
+			
+			ArrayList<Competitions> Competition_AV = new ArrayList<Competitions>();
 			
 			rs = st.executeQuery(sql);
 			while (rs.next())
@@ -151,7 +124,7 @@ public class main
 			
 			System.out.println();
 			int len1 = Competition_AV.size();
-			for (int i = 0; i < len; i++)
+			for (int i = 0; i < len1; i++)
 			{
 				Competitions o = Competition_AV.get(i);
 				o.Afficher();
@@ -162,6 +135,9 @@ public class main
 			
 			
 			// Afficher toutes les compétitions à venir //
+			String sql3 = "SELECT * FROM competition WHERE DATE_FIN < (SELECT date(now()))";
+			
+			ArrayList<Competitions> Competition_F = new ArrayList<Competitions>();
 			
 			rs = st.executeQuery(sql3);
 			while (rs.next())
@@ -196,7 +172,7 @@ public class main
 			
 			System.out.println();
 			int len2 = Competition_F.size();
-			for (int i = 0; i < len; i++)
+			for (int i = 0; i < len2; i++)
 			{
 				Competitions o = Competition_F.get(i);
 				o.Afficher();
@@ -205,12 +181,18 @@ public class main
 			
 /*#####################################################################################################################################################################################################################################################*/
 			
+			// Modifier Compétitions //
+			
+			int id = 1/*textField.getText()*/; // Récuperer
+			String sql4 = "SELECT * FROM competition WHERE ID_COMPETITION="+id+";";
+			
+/*#####################################################################################################################################################################################################################################################*/
 			
 			// Modifier une compétition //
 			
 			System.out.println();
-			String sql13 = "SELECT * FROM competition WHERE ID_SPORT="+id+";";
-			rs = st.executeQuery(sql13);
+			String sql5 = "SELECT * FROM competition WHERE ID_SPORT="+id+";";
+			rs = st.executeQuery(sql5);
 			while (rs.next())
 			{
 				int ID_C = rs.getInt("ID_COMPETITION");
@@ -240,8 +222,8 @@ public class main
 				nb = 0/*textField.getText()*/;
 				lieu = ""/*textField.getText()*/;
 				
-				String sql14 = "UPDATE competitions SET ID_SPORT="+ID_S+"LIBELLE_C="+libelle_C+", DATE_DEBUT="+date_D+", DATE_FIN="+date_F+", RECOMPENSE="+prix+", VAINQUEUR="+win+", NB_PARTICIPANTS="+nb+", LIEU="+lieu+" WHERE ID_COMPETITION="+id+"";
-				/*rs = st.executeQuery(sql14);*/
+				String sql6 = "UPDATE competitions SET ID_SPORT="+ID_S+"LIBELLE_C="+libelle_C+", DATE_DEBUT="+date_D+", DATE_FIN="+date_F+", RECOMPENSE="+prix+", VAINQUEUR="+win+", NB_PARTICIPANTS="+nb+", LIEU="+lieu+" WHERE ID_COMPETITION="+id+"";
+				/*st.executeUpdate(sql6);*/
 			}
 			
 			
@@ -251,8 +233,8 @@ public class main
 			// Voir les inscrits dans une competition //
 			
 			System.out.println();
-			String sql15 = "SELECT equipe.*, personne.* FROM equipe, competition, inscrire, personne WHERE inscrire.ID_EQUIPE=equipe.ID_EQUIPE AND inscrire.ID_COMPETITION=competition.ID_COMPETITION AND inscrire.ID_PERSONNE=personne.ID_PERSONNE AND competition.ID_COMPETITION="+id+";";
-			rs = st.executeQuery(sql15);
+			String sql7 = "SELECT equipe.*, personne.* FROM equipe, competition, inscrire, personne WHERE inscrire.ID_EQUIPE=equipe.ID_EQUIPE AND inscrire.ID_COMPETITION=competition.ID_COMPETITION AND inscrire.ID_PERSONNE=personne.ID_PERSONNE AND competition.ID_COMPETITION="+id+";";
+			rs = st.executeQuery(sql7);
 			while (rs.next())
 			{
 				int ID_P = rs.getInt("ID_Personne");
@@ -289,11 +271,13 @@ public class main
 			
 			// Suppression d'un inscrit dans une competition //
 			
-			System.out.println();
-			String sql19 = "DELETE FROM pratiquer WHERE ID_EQUIPE="+id+";";
-			/*rs = st.executeQuery(sql19);*/
-			String sql20 = "DELETE FROM pratiquer WHERE ID_PERSONNE="+id+";";
-			/*rs = st.executeQuery(sql20);*/
+			// Pour une Équipe //
+			String sql8 = "DELETE FROM pratiquer WHERE ID_EQUIPE="+id+";";
+			/*rs = st.executeQuery(sql8);*/
+			
+			// Pour une Personne //
+			String sql9 = "DELETE FROM pratiquer WHERE ID_PERSONNE="+id+";";
+			/*rs = st.executeQuery(sql9);*/
 			
 			
 /*#####################################################################################################################################################################################################################################################*/
@@ -302,8 +286,8 @@ public class main
 			// Suppression d'une competition //
 			
 			System.out.println();
-			String sql16 = "DELETE FROM competition WHERE ID_COMPETITION="+id+";";
-			/*rs = st.executeQuery(sql16);*/
+			String sql10 = "DELETE FROM competition WHERE ID_COMPETITION="+id+";";
+			/*rs = st.executeQuery(sql10);*/
 			
 			
 /*#####################################################################################################################################################################################################################################################*/
@@ -321,8 +305,8 @@ public class main
 			String win = ""/*textField.getText()*/;
 			int nb = 0/*textField.getText()*/;
 			String lieu = ""/*textField.getText()*/;
-			String sql17 = "INSERT INTO competition VALUES("+id_C+", "+id_S+", "+libelle_C+", "+date_D+", "+date_F+", "+prix+", "+win+", "+nb+", "+lieu+");";
-			/* rs = st.executeQuery(sql15); */
+			String sql11 = "INSERT INTO competition VALUES("+id_C+", "+id_S+", "+libelle_C+", "+date_D+", "+date_F+", "+prix+", "+win+", "+nb+", "+lieu+");";
+			/* rs = st.executeQuery(sql11); */
 			
 			
 /*#####################################################################################################################################################################################################################################################*/
@@ -331,7 +315,8 @@ public class main
 			// Delete une compétition //
 			
 			System.out.println();
-			String sql18 = "DELETE FROM competition WHERE ID_COMPETITION="+id+";";
+			String sql12 = "DELETE FROM competition WHERE ID_COMPETITION="+id+";";
+			/*rs = st.executeQuery(sql12);*/
 			
 			
 /*#####################################################################################################################################################################################################################################################*/
@@ -344,10 +329,12 @@ public class main
 			// Afficher les Détails d'une Equipe //
 			
 			System.out.println();
-			String nom_e = ""/*textField.getText()*/; 
+			String nom_e = ""/*textField.getText()*/;
 			String sport = ""/*textField.getText()*/;
-			String sql21 = "SELECT * FROM equipe WHERE NOM_E="+nom_e+";";
-			String sql22 = "SELECT equipe.* FROM equipe, sport, pratiquer WHERE pratiquer.ID_SPORT=sport.ID_SPORT AND pratiquer.ID_EQUIPE=equipe.ID_EQUIPE AND LIBELLE_S="+sport+";";
+			String sql13 = "SELECT * FROM equipe WHERE NOM_E="+nom_e+";"; /* Toutes les Équipes */
+			
+			// Toutes les Équipes d'un sport donné //
+			String sql14 = "SELECT equipe.* FROM equipe, sport, pratiquer WHERE pratiquer.ID_SPORT=sport.ID_SPORT AND pratiquer.ID_EQUIPE=equipe.ID_EQUIPE AND LIBELLE_S="+sport+";";
 			
 			
 /*#####################################################################################################################################################################################################################################################*/
@@ -356,8 +343,8 @@ public class main
 			// Modifier une Equipe //
 			
 			System.out.println();
-			String sql23 = "SELECT * FROM equipe WHERE ID_EQUIPE="+id+";";
-			rs = st.executeQuery(sql23);
+			String sql15 = "SELECT * FROM equipe WHERE ID_EQUIPE="+id+";";
+			rs = st.executeQuery(sql15);
 			while (rs.next())
 			{
 				int ID_E = rs.getInt("ID_EQUIPE");
@@ -372,14 +359,14 @@ public class main
 				System.out.println(nom_C);
 				System.out.println(ville);
 				
-				ID_E = 0/*textField.getText()*/;
+				ID_E = 0 /*textField.getText()*/;
 				nom_E = ""/*textField.getText()*/;
-				eff = 0/*textField.getText()*/;
+				eff = 0 /*textField.getText()*/;
 				nom_C = ""/*textField.getText()*/;
 				ville = ""/*textField.getText()*/;
 				
-				String sql24 = "UPDATE equipe SET ID_EQUIPE="+ID_E+", NOM_E="+nom_E+", EFFECTIF="+eff+", NOM_COACH="+nom_C+", VILLE="+ville+" WHERE ID_EQUIPE="+id+"";
-				/*rs = st.executeQuery(sql24);*/
+				String sql16 = "UPDATE equipe SET ID_EQUIPE="+ID_E+", NOM_E="+nom_E+", EFFECTIF="+eff+", NOM_COACH="+nom_C+", VILLE="+ville+" WHERE ID_EQUIPE="+id+"";
+				/*st.executeUpdate(sql16);*/
 			}
 			
 			
@@ -389,17 +376,38 @@ public class main
 			// Afficher les membres d'une equipe //
 			
 			System.out.println();
-			String sql25 = "SELECT personne.* FROM personne, equipe WHERE personne.ID_EQUIPE=equipe.ID_EQUIPE AND ID_EQUIPE="+id+";";
-			/*rs = st.executeQuery(sql25);*/
+			String sql17 = "SELECT personne.* FROM personne, equipe WHERE personne.ID_EQUIPE=equipe.ID_EQUIPE AND equipe.ID_EQUIPE="+id+";";
+			rs = st.executeQuery(sql17);
+			while (rs.next())
+			{
+				int ID_P = rs.getInt("ID_PERSONNE");
+				int ID_E = rs.getInt("ID_EQUIPE");
+				String nom_P = rs.getString("NOM_P");
+				String prenom = rs.getString("PRENOM");
+				int age = rs.getInt("AGE");
+				String date_N = rs.getString("DATE_NAISSANCE");
+				
+				System.out.println(ID_P);
+				System.out.println(ID_E);
+				System.out.println(nom_P);
+				System.out.println(prenom);
+				System.out.println(age);
+				System.out.println(date_N);
+				
+				ID_E = 0 /*textField.getText()*/;
+				
+				// Ajouter un membre dans une equipe //
+				
+				System.out.println();
+				String sql18 = "UPDATE personne SET ID_PERSONNE="+ID_P+", ID_EQUIPE="+ID_E+", Nom_P="+nom_P+", PRENOM="+prenom+", AGE="+age+", DATE_NAISSANCE="+date_N+";";
+				/*st.executeUpdate(sql18);*/
+			}
 			
 			
 /*#####################################################################################################################################################################################################################################################*/
 			
 			
-			// Ajouter un membre dans une equipe //
 			
-			System.out.println();
-			String sql26 = "";
 			
 			
 			
