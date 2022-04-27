@@ -122,7 +122,6 @@ public class main
 			
 			// Affichage des compétitions //
 			
-			System.out.println();
 			int len1 = Competition_AV.size();
 			for (int i = 0; i < len1; i++)
 			{
@@ -170,7 +169,6 @@ public class main
 			
 			// Affichage des compétitions //
 			
-			System.out.println();
 			int len2 = Competition_F.size();
 			for (int i = 0; i < len2; i++)
 			{
@@ -183,14 +181,54 @@ public class main
 			
 			// Modifier Compétitions //
 			
-			int id = 1/*textField.getText()*/; // Récuperer
+			ArrayList<Competitions> Competitions = new ArrayList<Competitions>();
+			
+			int id = 1 /*textField.getText()*/; // Récuperer
 			String sql4 = "SELECT * FROM competition WHERE ID_COMPETITION="+id+";";
+			
+			rs = st.executeQuery(sql4);
+			while (rs.next())
+			{
+				int ID_C = rs.getInt("ID_COMPETITION");
+				int ID_S = rs.getInt("ID_SPORT");
+				String libelle_C = rs.getString("LIBELLE_C");
+				String date_D = rs.getString("DATE_DEBUT");
+				String date_F = rs.getString("DATE_FIN");
+				String prix = rs.getString("RECOMPENSE");
+				String win = rs.getString("Vainqueur");
+				int nb = rs.getInt("NB_PARTICIPANTS");
+				String lieu = rs.getString("LIEU");
+				String aa = "";
+				
+				
+				// Essaie de print libelle_sport au lieu de id_sport //
+				String a = "SELECT LIBELLE_S FROM competition, sport WHERE competition.ID_SPORT=sport.ID_SPORT AND sport.ID_SPORT="+ID_S+";";
+				rs = st.executeQuery(a);
+				while (rs.next())
+				{
+					aa = rs.getString("LIBELLE_S");
+				}
+				
+				
+				Competitions u = new Competitions(ID_C, aa, libelle_C, date_D, date_F, prix, win, nb, lieu);
+				Competitions.add(u);
+			}
+			
+			
+			// Affichage des compétitions //
+			
+			System.out.println();
+			int len3 = Competitions.size();
+			for (int i = 0; i < len3; i++)
+			{
+				Competitions o = Competitions.get(i);
+				o.Afficher();
+			}
 			
 /*#####################################################################################################################################################################################################################################################*/
 			
 			// Modifier une compétition //
 			
-			System.out.println();
 			String sql5 = "SELECT * FROM competition WHERE ID_SPORT="+id+";";
 			rs = st.executeQuery(sql5);
 			while (rs.next())
@@ -204,15 +242,7 @@ public class main
 				String win = rs.getString("VAINQUEUR");
 				int nb = rs.getInt("NB_PARTICIPANTS");
 				String lieu = rs.getString("LIEU");
-				
-				System.out.println(libelle_C);
-				System.out.println(date_D);
-				System.out.println(date_F);
-				System.out.println(prix);
-				System.out.println(win);
-				System.out.println(nb);
-				System.out.println(lieu);
-				
+								
 				ID_S = 0/*textField.getText()*/;
 				libelle_C = ""/*textField.getText()*/;
 				date_D = ""/*textField.getText()*/;
@@ -237,6 +267,8 @@ public class main
 			rs = st.executeQuery(sql7);
 			while (rs.next())
 			{
+				// Pour une Personne //
+				
 				int ID_P = rs.getInt("ID_Personne");
 				int ID_E = rs.getInt("ID_EQUIPE");
 				String nom_P = rs.getString("NOM_P");
@@ -244,10 +276,14 @@ public class main
 				int age = rs.getInt("AGE");
 				String date_N = rs.getString("DATE_NAISSANCE");
 				
+				// Pour une Equipe //
+				
 				String nom_E = rs.getString("NOM_E");
 				int effectif = rs.getInt("EFFECTIF");
 				String nom_coach = rs.getString("NOM_COACH");
 				String ville = rs.getString("VILLE");
+				
+				// Personne //
 				
 				int id_E = 0/*textField.getText()*/;
 				String bb = "";
@@ -255,12 +291,15 @@ public class main
 				rs = st.executeQuery(b);
 				while (rs.next())
 				{
-					bb = rs.getString("LIBELLE_S");
+					bb = rs.getString("Nom_E");
 				}
 				
 				Personne u = new Personne(ID_P, bb, nom_P, prenom, age, date_N);
 				u.Afficher();
 				
+				// Equipe //
+				
+				System.out.println();
 				Equipe y = new Equipe(ID_E, nom_E, effectif, nom_coach, ville);
 				y.Afficher();
 			}
@@ -271,11 +310,11 @@ public class main
 			
 			// Suppression d'un inscrit dans une competition //
 			
-			// Pour une Équipe //
+			// Pour une Équipe inscrite //
 			String sql8 = "DELETE FROM pratiquer WHERE ID_EQUIPE="+id+";";
 			/*rs = st.executeQuery(sql8);*/
 			
-			// Pour une Personne //
+			// Pour une Personne inscrite //
 			String sql9 = "DELETE FROM pratiquer WHERE ID_PERSONNE="+id+";";
 			/*rs = st.executeQuery(sql9);*/
 			
@@ -285,7 +324,6 @@ public class main
 			
 			// Suppression d'une competition //
 			
-			System.out.println();
 			String sql10 = "DELETE FROM competition WHERE ID_COMPETITION="+id+";";
 			/*rs = st.executeQuery(sql10);*/
 			
@@ -314,7 +352,6 @@ public class main
 			
 			// Delete une compétition //
 			
-			System.out.println();
 			String sql12 = "DELETE FROM competition WHERE ID_COMPETITION="+id+";";
 			/*rs = st.executeQuery(sql12);*/
 			
@@ -328,13 +365,40 @@ public class main
 			
 			// Afficher les Détails d'une Equipe //
 			
-			System.out.println();
 			String nom_e = ""/*textField.getText()*/;
 			String sport = ""/*textField.getText()*/;
-			String sql13 = "SELECT * FROM equipe WHERE NOM_E="+nom_e+";"; /* Toutes les Équipes */
 			
-			// Toutes les Équipes d'un sport donné //
+			// Par Rapport au Nom //
+			
+			String sql13 = "SELECT * FROM equipe WHERE NOM_E="+nom_e+";";
+			/*rs = st.executeQuery(sql13);*/
+			while (rs.next())
+			{
+				int ID_E = rs.getInt("ID_EQUIPE");
+				String nom_E = rs.getString("NOM_E");
+				int effectif = rs.getInt("EFFECTIF");
+				String nom_coach = rs.getString("NOM_COACH");
+				String ville = rs.getString("VILLE");
+				
+				Equipe y = new Equipe(ID_E, nom_E, effectif, nom_coach, ville);
+				y.Afficher();
+			}
+			
+			// Par Rapport au Sport //
+			
 			String sql14 = "SELECT equipe.* FROM equipe, sport, pratiquer WHERE pratiquer.ID_SPORT=sport.ID_SPORT AND pratiquer.ID_EQUIPE=equipe.ID_EQUIPE AND LIBELLE_S="+sport+";";
+			/*rs = st.executeQuery(sql14);*/
+			while (rs.next())
+			{
+				int ID_E = rs.getInt("ID_EQUIPE");
+				String nom_E = rs.getString("NOM_E");
+				int effectif = rs.getInt("EFFECTIF");
+				String nom_coach = rs.getString("NOM_COACH");
+				String ville = rs.getString("VILLE");
+				
+				Equipe y = new Equipe(ID_E, nom_E, effectif, nom_coach, ville);
+				y.Afficher();
+			}
 			
 			
 /*#####################################################################################################################################################################################################################################################*/
@@ -342,7 +406,6 @@ public class main
 			
 			// Modifier une Equipe //
 			
-			System.out.println();
 			String sql15 = "SELECT * FROM equipe WHERE ID_EQUIPE="+id+";";
 			rs = st.executeQuery(sql15);
 			while (rs.next())
@@ -375,6 +438,7 @@ public class main
 			
 			// Afficher les membres d'une equipe //
 			
+			id = 2;
 			System.out.println();
 			String sql17 = "SELECT personne.* FROM personne, equipe WHERE personne.ID_EQUIPE=equipe.ID_EQUIPE AND equipe.ID_EQUIPE="+id+";";
 			rs = st.executeQuery(sql17);
@@ -394,21 +458,105 @@ public class main
 				System.out.println(age);
 				System.out.println(date_N);
 				
-				ID_E = 0 /*textField.getText()*/;
 				
 				// Ajouter un membre dans une equipe //
 				
+				ID_E = 0/*textField.getText()*/;
 				System.out.println();
 				String sql18 = "UPDATE personne SET ID_PERSONNE="+ID_P+", ID_EQUIPE="+ID_E+", Nom_P="+nom_P+", PRENOM="+prenom+", AGE="+age+", DATE_NAISSANCE="+date_N+";";
 				/*st.executeUpdate(sql18);*/
+				
+				
+				// Delete un Membre dans une Equipe//
+				
+				String sql19 = "UPDATE personne SET ID_PERSONNE="+ID_P+", ID_EQUIPE=null, Nom_P="+nom_P+", PRENOM="+prenom+", AGE="+age+", DATE_NAISSANCE="+date_N+";";
+				/*st.executeUpdate(sql19);*/
 			}
 			
 			
 /*#####################################################################################################################################################################################################################################################*/
 			
 			
+			// Delete une Equipe //
+			
+			String sql20 = "DELETE FROM equipe WHERE ID_EQUIPE="+id+";";
+			/*rs = st.executeQuery(sql20);*/
 			
 			
+/*#####################################################################################################################################################################################################################################################*/
+			
+			
+			// Ajouter une Equipe //
+			
+			System.out.println();
+			String id_E = ""/*textField.getText()*/;
+			String nom_E = ""/*textField.getText()*/;
+			int eff = 0/*textField.getText()*/;
+			String nom_C = ""/*textField.getText()*/;
+			String ville = ""/*textField.getText()*/;
+			String sql21 = "INSERT INTO equipe VALUES("+id_E+", "+nom_E+", "+eff+", "+nom_C+", "+ville+");";
+			/* rs = st.executeQuery(sql21); */
+			
+			
+/*#####################################################################################################################################################################################################################################################*/
+			
+			
+			// Personnes Details //
+			
+			System.out.println();
+			String nom_p = ""/*textField.getText()*/;
+			sport = ""/*textField.getText()*/;
+			
+			// Par Rapport au Nom //
+			
+			String sql22 = "SELECT * FROM personne WHERE NOM_E="+nom_p+";";
+			/*rs = st.executeQuery(sql22);*/
+			while (rs.next())
+			{
+				int ID_P = rs.getInt("ID_PERSONNE");
+				int ID_E = rs.getInt("ID_EQUIPE");
+				String nom_P = rs.getString("NOM_P");
+				String prenom = rs.getString("PRENOM");
+				int age = rs.getInt("AGE");
+				String date_N = rs.getString("DATE_NAISSANCE");
+				
+				Personne y = new Personne(ID_P, ID_E, nom_P, prenom, age, date_N);
+				y.Afficher1();
+			}
+			
+			// Par Rapport au Sport //
+			
+			String sql23 = "SELECT personne.* FROM personne, sport, pratiquer WHERE pratiquer.ID_SPORT=sport.ID_SPORT AND pratiquer.ID_PERSONNE=personne.ID_PERSONNE AND LIBELLE_S="+sport+";";
+			/*rs = st.executeQuery(sql23);*/
+			while (rs.next())
+			{
+				int ID_P = rs.getInt("ID_PERSONNE");
+				int ID_E = rs.getInt("ID_EQUIPE");
+				String nom_P = rs.getString("NOM_P");
+				String prenom = rs.getString("PRENOM");
+				int age = rs.getInt("AGE");
+				String date_N = rs.getString("DATE_NAISSANCE");
+				
+				Personne y = new Personne(ID_P, ID_E, nom_P, prenom, age, date_N);
+				y.Afficher1();
+			}
+			
+			// Par Rapport a sa presence dans une Equipe //
+			
+			String sql24 = "SELECT * FROM personne WHERE ID_EQUIPE IS NOT NULL;";
+			rs = st.executeQuery(sql24);
+			while (rs.next())
+			{
+				int ID_P = rs.getInt("ID_PERSONNE");
+				int ID_E = rs.getInt("ID_EQUIPE");
+				String nom_P = rs.getString("NOM_P");
+				String prenom = rs.getString("PRENOM");
+				int age = rs.getInt("AGE");
+				String date_N = rs.getString("DATE_NAISSANCE");
+				
+				Personne y = new Personne(ID_P, ID_E, nom_P, prenom, age, date_N);
+				y.Afficher1();
+			}
 			
 			
 			
@@ -420,12 +568,14 @@ public class main
 		}
 		catch (SQLException e)
 		{
-		e.printStackTrace();
+			e.printStackTrace();
 		}
 		catch (ClassNotFoundException e)
 		{
 			e.printStackTrace();
 		}
+		
+		
 		finally
 		{
 			try
@@ -437,8 +587,6 @@ public class main
 			{
 				e.printStackTrace();
 			}
-			
 		}
 	}
-
 }
